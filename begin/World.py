@@ -52,7 +52,24 @@ class World(object):
 
 	def makeTurn(self):
 		actions = []
-
+		print("1: wlaczenie trybu plagii")
+		print("2: dodanie nowego organizmu")
+		print("3: dodanie nowego organizmu")
+		try:
+			pick=int(input("wybierz akcje:"))
+		except ValueError:
+			print("")
+			
+		match pick:
+			case 1:
+				for org in self.organisms:
+					if self.positionOnBoard(org.position):
+						actions = org.decreasehealth()
+				
+						for a in actions:
+							self.makeMove(a)
+			case 3:
+				print("")
 		for org in self.organisms:
 			if self.positionOnBoard(org.position):
 				actions = org.move()
@@ -90,6 +107,8 @@ class World(object):
 			action.organism.position = action.position
 		elif action.action == ActionEnum.A_REMOVE:
 			action.organism.position = Position(xPosition=-1, yPosition=-1)
+		elif action.action == ActionEnum.A_DECREASELIVELENGTH:
+			action.organism.liveLength -= action.value
 
 	def addOrganism(self, newOrganism):
 		newOrgPosition = Position(xPosition=newOrganism.position.x, yPosition=newOrganism.position.y)
@@ -156,4 +175,10 @@ class World(object):
 				else:
 					result += self.separator
 			result += '\n'
+		return result
+
+	def plague(self):
+		result=[]
+		for org in self.organisms:
+			result.append(org.decreasehealth)
 		return result

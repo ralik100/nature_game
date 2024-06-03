@@ -28,7 +28,7 @@ class Animal(Organism):
 			result.append(Action(ActionEnum.A_MOVE, newPosition, 0, self))
 			self.lastPosition = self.position
 			metOrganism = self.world.getOrganismFromPosition(newPosition)
-			if metOrganism is not None:
+			if metOrganism is not None : 
 				result.extend(metOrganism.consequences(self))
 		return result
 
@@ -51,3 +51,18 @@ class Animal(Organism):
 
 	def getNeighboringBirthPosition(self):
 		return self.world.filterFreePositions(self.world.getNeighboringPositions(self.position))
+
+
+	#def run(self):
+	#	result = []
+	#	pomPositions = self.getNeighboringPosition()
+	#	newPosition = None
+
+		if pomPositions:
+			newPosition = random.choice(pomPositions)
+			result.append(Action(ActionEnum.A_MOVE, newPosition, 0, self))
+			self.lastPosition = self.position
+			metOrganism = self.world.getOrganismFromPosition(newPosition)
+			if metOrganism is not None:
+				result.extend(metOrganism.consequences(self))
+		return result

@@ -31,6 +31,7 @@ class Action(object):
 			ActionEnum.A_ADD: '{0}: add at: {1}'.format(className, self.position),
 			ActionEnum.A_INCREASEPOWER: '{0} increase power: {1}'.format(className, self.value),
 			ActionEnum.A_MOVE: '{0} move form: {1} to: {2}'.format(className, self.organism.position, self.position),
-			ActionEnum.A_REMOVE: '{0} remove form: {1}'.format(className, self.organism.position)
+			ActionEnum.A_REMOVE: '{0} remove form: {1}'.format(className, self.organism.position),
+			ActionEnum.A_DECREASELIVELENGTH: '{0} decrease live length: {1}'.format(className, self.value)
 		}
 		return choice[self.action]

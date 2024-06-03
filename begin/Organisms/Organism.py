@@ -111,6 +111,11 @@ class Organism(ABC):
 		else:
 			result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self))
 		return result
+	
+	def decreasehealth(self):
+		result = []
+		result.append(Action(ActionEnum.A_DECREASELIVELENGTH, self.position, int(self.liveLength/2), self))
+		return result
 
 	def ifReproduce(self):
 		result = False
