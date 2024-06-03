@@ -13,6 +13,8 @@ class World(object):
 		self.__organisms = []
 		self.__newOrganisms = []
 		self.__separator = '.'
+		self.__plague = False
+		self.__countdown = 2
 
 	@property
 	def worldX(self):
@@ -51,6 +53,7 @@ class World(object):
 		return self.__separator
 
 	def makeTurn(self):
+		
 		actions = []
 		print("1: wlaczenie trybu plagii")
 		print("2: dodanie nowego organizmu")
@@ -62,12 +65,19 @@ class World(object):
 			
 		match pick:
 			case 1:
-				for org in self.organisms:
-					if self.positionOnBoard(org.position):
-						actions = org.decreasehealth()
+				if not self.__plague:
+					for org in self.organisms:
+						if self.positionOnBoard(org.position):
+							actions = org.decreasehealth()
 				
-						for a in actions:
-							self.makeMove(a)
+							for a in actions:
+								self.makeMove(a)
+							actions=[]
+					self.__plague = True
+				else:
+					print("")
+					print("plaga pustoszy juz swiat")
+					print("")
 			case 3:
 				print("")
 		for org in self.organisms:
@@ -95,6 +105,21 @@ class World(object):
 		self.organisms.sort(key=lambda o: o.initiative, reverse=True)
 		self.newOrganisms = []
 
+		if self.__plague and self.__countdown>0:
+			self.__countdown-=1
+		elif self.__plague and self.__countdown==0:
+			for org in self.organisms:
+				if self.positionOnBoard(org.position):
+					actions = org.increasehealth()
+				
+					for a in actions:
+						self.makeMove(a)
+			print("")
+			print("plaga konczy sie")
+			print("")
+			self.__plague=False
+			self.__countdown=2
+
 		self.turn += 1
 
 	def makeMove(self, action):
@@ -109,6 +134,8 @@ class World(object):
 			action.organism.position = Position(xPosition=-1, yPosition=-1)
 		elif action.action == ActionEnum.A_DECREASELIVELENGTH:
 			action.organism.liveLength -= action.value
+		elif action.action == ActionEnum.A_INCREASELIVELENGTH:
+			action.organism.liveLength += action.value
 
 	def addOrganism(self, newOrganism):
 		newOrgPosition = Position(xPosition=newOrganism.position.x, yPosition=newOrganism.position.y)
@@ -177,8 +204,4 @@ class World(object):
 			result += '\n'
 		return result
 
-	def plague(self):
-		result=[]
-		for org in self.organisms:
-			result.append(org.decreasehealth)
-		return result
+
