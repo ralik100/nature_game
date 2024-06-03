@@ -57,29 +57,46 @@ class World(object):
 		actions = []
 		print("1: wlaczenie trybu plagii")
 		print("2: dodanie nowego organizmu")
-		print("3: dodanie nowego organizmu")
 		try:
 			pick=int(input("wybierz akcje:"))
 		except ValueError:
-			print("")
-			
-		match pick:
-			case 1:
-				if not self.__plague:
-					for org in self.organisms:
-						if self.positionOnBoard(org.position):
-							actions = org.decreasehealth()
+			pass
+		try:
+			match pick:
+				case 1:
+					if not self.__plague:
+						for org in self.organisms:
+							if self.positionOnBoard(org.position):
+								actions = org.decreasehealth()
 				
-							for a in actions:
-								self.makeMove(a)
-							actions=[]
-					self.__plague = True
-				else:
-					print("")
-					print("plaga pustoszy juz swiat")
-					print("")
-			case 3:
-				print("")
+								for a in actions:
+									self.makeMove(a)
+								actions=[]
+						self.__plague = True
+					else:
+						print("")
+						print("plaga pustoszy juz swiat")
+						print("")
+				case 2:
+					result=[]
+					#fields=ob
+					name=input("jaki organizm chcialbys dodac?")
+					#free=self.filterFreePositions(self.object)
+					#for i in free:
+					#	print("").join(i)
+					print("wybierz jedna z tych wolnych pozycji, aby dodac swoj organizm")
+					pos_x=input("podaj x")
+					pos_y=input("podaj y")
+					
+					newOrg = name(position=Position(xPosition=pos_x, yPosition=pos_y), world=self)
+					self.addOrganism(newOrg)
+					for a in actions:
+						self.makeMove(a)
+					actions=[]
+				case _:
+					print("niepoprawne dane wejsciowe")		
+		except UnboundLocalError:
+			pass
 		for org in self.organisms:
 			if self.positionOnBoard(org.position):
 				actions = org.move()
