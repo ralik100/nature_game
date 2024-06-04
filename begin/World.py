@@ -2,6 +2,10 @@ from Position import Position
 from Organisms.Plant import Plant
 from Action import Action
 from ActionEnum import ActionEnum
+from Organisms.Grass import Grass 
+from Organisms.Sheep import Sheep 
+from Organisms.Rys import Rys 
+from Organisms.Antylopa import Antylopa 
 
 
 class World(object):
@@ -55,10 +59,9 @@ class World(object):
 	def makeTurn(self):
 		
 		actions = []
-		print("1: wlaczenie trybu plagii")
-		print("2: dodanie nowego organizmu")
+		print("jesli chcesz wlaczyc tryb plagii, to wybierz 1")
 		try:
-			pick=int(input("wybierz akcje:"))
+			pick=int(input("wpisz:"))
 		except ValueError:
 			pass
 		try:
@@ -80,19 +83,33 @@ class World(object):
 				case 2:
 					result=[]
 					#fields=ob
-					name=input("jaki organizm chcialbys dodac?")
-					#free=self.filterFreePositions(self.object)
-					#for i in free:
-					#	print("").join(i)
-					print("wybierz jedna z tych wolnych pozycji, aby dodac swoj organizm")
-					pos_x=input("podaj x")
-					pos_y=input("podaj y")
+					print("1 - Grass")
+					print("2 - Rys")
+					print("3 - Sheep")
+					print("4 - Antylopa")
 					
-					newOrg = name(position=Position(xPosition=pos_x, yPosition=pos_y), world=self)
-					self.addOrganism(newOrg)
-					for a in actions:
-						self.makeMove(a)
-					actions=[]
+					name=int(input("jaki organizm chcialbys dodac?"))
+
+					print("wybierz jedna z tych wolnych pozycji, aby dodac swoj organizm")
+					pos_x=int(input("podaj x"))
+					pos_y=int(input("podaj y"))
+					
+					match name:
+						case 1:
+							newOrg = Grass(position=Position(xPosition=pos_x, yPosition=pos_y), world=self)
+							self.addOrganism(newOrg)
+						case 2:
+							newOrg = Rys(position=Position(xPosition=pos_x, yPosition=pos_y), world=self)
+							self.addOrganism(newOrg)
+						case 3:
+							newOrg = Sheep(position=Position(xPosition=pos_x, yPosition=pos_y), world=self)
+							self.addOrganism(newOrg)
+						case 4:
+							newOrg = Antylopa(position=Position(xPosition=pos_x, yPosition=pos_y), world=self)
+							self.addOrganism(newOrg)
+						case _:
+							print("niepoprawne dane wejsciowe")
+					
 				case _:
 					print("niepoprawne dane wejsciowe")		
 		except UnboundLocalError:

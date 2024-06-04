@@ -30,5 +30,7 @@ if __name__ == '__main__':
 	for _ in range(0, 50):
 		input('')
 		os.system('cls')
-		pyWorld.makeTurn()
+		pyWorld.makeTurn()		
 		print(pyWorld)
+		
+		

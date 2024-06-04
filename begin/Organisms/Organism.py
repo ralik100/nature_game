@@ -121,6 +121,7 @@ class Organism(ABC):
 		result = []
 		result.append(Action(ActionEnum.A_INCREASELIVELENGTH, self.position, self.liveLength, self))
 		return result
+	
 
 	def ifReproduce(self):
 		result = False
