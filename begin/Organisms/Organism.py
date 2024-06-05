@@ -3,7 +3,6 @@ from Position import Position
 from Action import Action
 from ActionEnum import ActionEnum
 
-
 class Organism(ABC):
 
 	def __init__(self, organism, position, world):
@@ -133,3 +132,4 @@ class Organism(ABC):
 	def __str__(self):
 		return '{0}: power: {1} initiative: {2} liveLength {3} position: {4}'\
 				.format(self.__class__.__name__, self.power, self.initiative, self.liveLength, self.position)
+	

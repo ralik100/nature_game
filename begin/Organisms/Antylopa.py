@@ -18,3 +18,4 @@ class Antylopa(Animal):
 
 	def getNeighboringPosition(self):
 		return self.world.filterPositionsWithoutAnimals(self.world.getNeighboringPositions(self.position))
+	

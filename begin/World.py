@@ -6,7 +6,7 @@ from Organisms.Grass import Grass
 from Organisms.Sheep import Sheep 
 from Organisms.Rys import Rys 
 from Organisms.Antylopa import Antylopa 
-
+import random
 
 class World(object):
 
@@ -60,6 +60,7 @@ class World(object):
 		
 		actions = []
 		print("jesli chcesz wlaczyc tryb plagii, to wybierz 1")
+		print("jesli chcesz dodac nowy organizm, to wybierz 2")
 		try:
 			pick=int(input("wpisz:"))
 		except ValueError:
@@ -88,11 +89,10 @@ class World(object):
 					print("3 - Sheep")
 					print("4 - Antylopa")
 					
-					name=int(input("jaki organizm chcialbys dodac?"))
+					name=int(input("jaki organizm chcialbys dodac?: "))
 
-					print("wybierz jedna z tych wolnych pozycji, aby dodac swoj organizm")
-					pos_x=int(input("podaj x"))
-					pos_y=int(input("podaj y"))
+					pos_x=int(input("podaj x: "))
+					pos_y=int(input("podaj y: "))
 					
 					match name:
 						case 1:
@@ -126,6 +126,8 @@ class World(object):
 						self.makeMove(a)
 					actions = []
 
+
+		
 		self.organisms = [o for o in self.organisms if self.positionOnBoard(o.position)]
 		for o in self.organisms:
 			o.liveLength -= 1
@@ -153,6 +155,8 @@ class World(object):
 			print("")
 			self.__plague=False
 			self.__countdown=2
+		
+
 
 		self.turn += 1
 
@@ -238,4 +242,20 @@ class World(object):
 			result += '\n'
 		return result
 
-
+	#def near_rys(self, org):
+		pomPos = org.getNeighboringPosition()
+		result=[]
+		no_rys_pomPos = pomPos
+		try:
+			pos=no_rys_pomPos.index(Rys)
+			no_rys_pomPos.pop(pos)
+		except IndexError:
+			pass
+		if	pomPos.getOrganismFromPosition()==Rys and len(no_rys_pomPos)>0 and org.position.getOrganismFromPosition()==Antylopa:
+				newPosition = random.choice(no_rys_pomPos+1)
+				result.append(Action(ActionEnum.A_MOVE, newPosition, 0, org))
+				org.lastPosition = org.position
+				metOrganism = org.world.getOrganismFromPosition(newPosition)
+				if metOrganism is not None : 
+					result.extend(metOrganism.consequences(org))
+		return result

@@ -3,7 +3,6 @@ from Action import Action
 from ActionEnum import ActionEnum
 import random
 
-
 class Animal(Organism):
 
 	def __init__(self, animal=None, position=None, world=None):
